@@ -1,0 +1,26 @@
+# Sample Contacts for Testing
+
+# Format: One phone number per line
+# Supports multiple formats:
+# - 10 digits (will auto-add +91)
+# - With country code
+# - With + prefix
+
+# Indian Numbers (10 digits)
+9876543210
+9999888877
+9888777666
+8765432109
+7654321098
+
+# With Country Code
+919123456789
+919234567890
+
+# With + Prefix
++919345678901
++919456789012
+
+# You can also include names (will be ignored during extraction)
+John Doe, 9567890123
+Jane Smith, +919678901234
