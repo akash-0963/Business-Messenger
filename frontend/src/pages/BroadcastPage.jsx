@@ -7,9 +7,11 @@ import MessageComposer from '../components/MessageComposer';
 import StatusLog from '../components/StatusLog';
 import { validatePhones, sendBroadcast } from '../api/api';
 
+const MAX_RECIPIENTS = 250;
+
 /**
  * BroadcastPage - Main application page
- * Orchestrates the entire broadcast workflow
+ * Orchestrates the entire broadcast workflow with 250 recipient limit
  */
 const BroadcastPage = () => {
   // State management
@@ -33,33 +35,47 @@ const BroadcastPage = () => {
   };
 
   /**
-   * Normalize phone number
+   * Normalize phone number with country code support
    */
   const normalizePhone = (phone) => {
-    const digitsOnly = phone.replace(/\D/g, '');
-    if (digitsOnly.length === 10) {
-      return `+91${digitsOnly}`;
+    if (!phone) return '';
+
+    // Remove all whitespace, dashes, parentheses
+    let cleaned = phone.replace(/[\s\-\(\)\.\[\]]/g, '');
+
+    // Ensure it starts with +
+    if (!cleaned.startsWith('+')) {
+      cleaned = `+${cleaned}`;
     }
-    if (digitsOnly.length > 10) {
-      return `+${digitsOnly}`;
-    }
-    return digitsOnly;
+
+    return cleaned;
   };
 
   /**
-   * Handle phone extraction from uploaded file
+   * Handle phone extraction from uploaded file or manual input
    */
   const handlePhonesExtracted = (phones) => {
     // Normalize and remove duplicates
     const normalized = phones.map(normalizePhone);
     const unique = [...new Set(normalized)];
     
+    // Check 250 limit
+    if (unique.length > MAX_RECIPIENTS) {
+      addLog(
+        'Recipient limit exceeded!',
+        `You can only add up to ${MAX_RECIPIENTS} contacts. Current: ${unique.length}`,
+        'error'
+      );
+      alert(`Maximum ${MAX_RECIPIENTS} recipients allowed. You have ${unique.length} numbers.`);
+      return;
+    }
+
     setContacts(unique);
-    setValidContacts([]); // Reset validation
+    setValidContacts(unique); // Auto-mark all as valid (skip validation)
     
     addLog(
-      'Contacts uploaded successfully',
-      `${unique.length} unique contacts extracted`,
+      'Contacts added successfully',
+      `${unique.length} unique contacts added`,
       'success'
     );
   };
@@ -101,8 +117,8 @@ const BroadcastPage = () => {
    * Handle broadcast send
    */
   const handleSend = async () => {
-    if (validContacts.length === 0) {
-      alert('Please validate contacts first');
+    if (contacts.length === 0) {
+      alert('Please add contacts first');
       return;
     }
 
@@ -111,8 +127,11 @@ const BroadcastPage = () => {
       return;
     }
 
+    // Use contacts directly (skip validation check)
+    const numbersToSend = validContacts.length > 0 ? validContacts : contacts;
+
     const confirmSend = window.confirm(
-      `Are you sure you want to send this message to ${validContacts.length} contacts?`
+      `Are you sure you want to send this message to ${numbersToSend.length} contacts?`
     );
 
     if (!confirmSend) return;
@@ -120,12 +139,12 @@ const BroadcastPage = () => {
     setIsSending(true);
     addLog(
       'Sending broadcast...',
-      `Sending to ${validContacts.length} recipients`,
+      `Sending to ${numbersToSend.length} recipients`,
       'loading'
     );
 
     try {
-      const result = await sendBroadcast(validContacts, message);
+      const result = await sendBroadcast(numbersToSend, message);
       
       if (result.success) {
         addLog(
@@ -169,19 +188,41 @@ const BroadcastPage = () => {
     }
   };
 
+  /**
+   * Remove individual contact
+   */
+  const handleRemoveContact = (phoneToRemove) => {
+    setContacts(prev => prev.filter(phone => phone !== phoneToRemove));
+    setValidContacts(prev => prev.filter(phone => phone !== phoneToRemove));
+    addLog('Contact removed', phoneToRemove, 'info');
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Header />
+      
+      {/* 250 Recipient Limit Warning */}
+      {contacts.length > MAX_RECIPIENTS && (
+        <div className="container mx-auto px-4 pt-4">
+          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
+            <p className="font-bold">⚠️ Recipient Limit Exceeded!</p>
+            <p>Maximum {MAX_RECIPIENTS} recipients allowed. You have {contacts.length} contacts. Please remove {contacts.length - MAX_RECIPIENTS} contacts before sending.</p>
+          </div>
+        </div>
+      )}
       
       <main className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
-            <FileUpload onPhonesExtracted={handlePhonesExtracted} />
+            <FileUpload 
+              onPhonesExtracted={handlePhonesExtracted}
+            />
             
             <ContactList 
               contacts={contacts} 
-              validContacts={validContacts} 
+              validContacts={validContacts}
+              onRemoveContact={handleRemoveContact}
             />
             
             <MessageComposer

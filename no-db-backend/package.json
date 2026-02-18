@@ -1,0 +1,18 @@
+﻿{
+  "name": "whatsapp-broadcast-backend-no-db",
+  "version": "1.0.0",
+  "description": "WhatsApp Broadcast Portal Backend (No Database)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.2",
+    "p-queue": "^8.0.1"
+  }
+}

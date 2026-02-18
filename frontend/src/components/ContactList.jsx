@@ -4,7 +4,7 @@ import React from 'react';
  * ContactList Component
  * Displays list of phone numbers with validation status
  */
-const ContactList = ({ contacts, validContacts = [] }) => {
+const ContactList = ({ contacts, validContacts = [], onRemoveContact }) => {
   if (contacts.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow-md p-6">
@@ -49,6 +49,9 @@ const ContactList = ({ contacts, validContacts = [] }) => {
                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -72,6 +75,15 @@ const ContactList = ({ contacts, validContacts = [] }) => {
                         Not validated
                       </span>
                     )}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    <button
+                      onClick={() => onRemoveContact(phone)}
+                      className="text-red-600 hover:text-red-800 hover:bg-red-50 px-3 py-1 rounded transition-colors"
+                      title="Remove this contact"
+                    >
+                      🗑️ Remove
+                    </button>
                   </td>
                 </tr>
               ))}

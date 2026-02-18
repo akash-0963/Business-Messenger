@@ -1,0 +1,326 @@
+# WhatsApp Business API - Complete Setup Guide
+
+This guide will help you get everything you need to use WhatsApp Business API for real-life messaging.
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 1: CREATE META DEVELOPER ACCOUNT
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Go to: https://developers.facebook.com/
+2. Click "Get Started" (top right)
+3. Log in with your Facebook account (or create one)
+4. Complete the registration process
+5. Verify your email address
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 2: CREATE A META APP
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Go to: https://developers.facebook.com/apps
+2. Click "Create App" button
+3. Select "Business" as app type
+4. Fill in app details:
+   - App Name: "WhatsApp Marketing Portal" (or your choice)
+   - App Contact Email: your email
+   - Business Portfolio: Create new or select existing
+5. Click "Create App"
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 3: ADD WHATSAPP PRODUCT
+═══════════════════════════════════════════════════════════════════════════════
+
+1. In your app dashboard, scroll to "Add Products"
+2. Find "WhatsApp" and click "Set Up"
+3. You'll be taken to WhatsApp API Setup page
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 4: GET YOUR CREDENTIALS
+═══════════════════════════════════════════════════════════════════════════════
+
+On the WhatsApp API Setup page, you'll see:
+
+A. PHONE NUMBER ID
+   Location: Under "Send and receive messages" section
+   Format: 123456789012345 (15 digits)
+   Copy this number - you'll need it for .env file
+   
+   → WHATSAPP_PHONE_NUMBER_ID=paste_here
+
+B. ACCESS TOKEN (Temporary - for testing)
+   Location: Same section, click "Generate Access Token"
+   Format: EAAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx (very long string)
+   Valid for: 24 hours (for testing only)
+   Copy this token
+   
+   → WHATSAPP_TOKEN=paste_here
+
+C. TEST PHONE NUMBER
+   Meta provides: A test number to start (e.g., +1 555 0100)
+   You can send to: Up to 5 phone numbers (must be added in settings)
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 5: ADD TEST RECIPIENT NUMBERS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. On WhatsApp API Setup page, find "To" field
+2. Click "Manage phone number list"
+3. Add YOUR phone number (with country code, e.g., +919876543210)
+4. Verify with 6-digit code sent to your WhatsApp
+5. You can add up to 5 numbers for testing
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 6: UPDATE YOUR .ENV FILE
+═══════════════════════════════════════════════════════════════════════════════
+
+Open: no-db-backend/.env
+
+Paste your credentials:
+
+WHATSAPP_PHONE_NUMBER_ID=123456789012345
+WHATSAPP_TOKEN=EAAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+GRAPH_API_VERSION=v17.0
+PORT=3000
+NODE_ENV=development
+RATE_LIMIT_CONCURRENCY=5
+RATE_LIMIT_INTERVAL=1000
+
+Save the file!
+
+═══════════════════════════════════════════════════════════════════════════════
+STEP 7: TEST YOUR SETUP
+═══════════════════════════════════════════════════════════════════════════════
+
+Method 1: Use the Interface
+1. Start backend: cd no-db-backend && npm start
+2. Start frontend: cd frontend && npm run dev
+3. Open browser: http://localhost:5174
+4. Add your phone number
+5. Click "Validate Contacts"
+6. Write test message
+7. Click "Send Broadcast"
+8. Check your WhatsApp!
+
+Method 2: Test with cURL (in PowerShell)
+Replace YOUR_PHONE_ID and YOUR_TOKEN:
+
+curl -X POST `
+  "https://graph.facebook.com/v17.0/YOUR_PHONE_ID/messages" `
+  -H "Authorization: Bearer YOUR_TOKEN" `
+  -H "Content-Type: application/json" `
+  -d '{
+    "messaging_product": "whatsapp",
+    "to": "919876543210",
+    "type": "text",
+    "text": { "body": "Hello from WhatsApp API!" }
+  }'
+
+═══════════════════════════════════════════════════════════════════════════════
+FOR PRODUCTION USE (REAL CUSTOMERS)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. GET BUSINESS VERIFICATION
+   ─────────────────────────────
+   Go to: https://business.facebook.com/settings/
+   - Submit business documents
+   - Verify your business
+   - Wait for approval (1-5 days)
+
+2. ADD YOUR OWN PHONE NUMBER
+   ─────────────────────────────
+   - WhatsApp → Phone Numbers → "Add phone number"
+   - Enter your business phone number
+   - Verify with SMS code
+   - Display name: Your business name
+   - This becomes your sender number
+
+3. GET PERMANENT ACCESS TOKEN
+   ─────────────────────────────
+   Go to: https://business.facebook.com/settings/system-users
+   - Create System User
+   - Assign WhatsApp permissions
+   - Generate Token (doesn't expire)
+   - Update .env with new token
+
+4. CREATE MESSAGE TEMPLATES
+   ─────────────────────────────
+   Go to: WhatsApp → Message Templates (in your app dashboard)
+   
+   Why needed: WhatsApp requires pre-approved templates for:
+   - First message to a user
+   - Messages after 24-hour window
+   
+   How to create:
+   - Click "Create Template"
+   - Choose category (Marketing, Utility, Authentication)
+   - Write template text
+   - Submit for approval
+   - Wait 24-48 hours for Meta approval
+   - Use only approved templates
+
+   Example Template:
+   ───────────────
+   Name: welcome_message
+   Category: Marketing
+   Language: English
+   
+   Message:
+   Hello {{1}},
+   
+   Welcome to [Your Business]! We're excited to have you with us.
+   
+   Visit our website: {{2}}
+   
+   Reply STOP to unsubscribe.
+
+5. MESSAGING LIMITS (TIER SYSTEM)
+   ─────────────────────────────────
+   Tier 1: 1,000 unique users/day (new accounts)
+   Tier 2: 10,000 users/day (after good quality metrics)
+   Tier 3: 100,000 users/day (verified businesses)
+   Tier 4: Unlimited (enterprise level)
+   
+   Quality metrics matter:
+   - Keep delivery rate >95%
+   - Avoid user blocks/reports
+   - Honor opt-outs immediately
+
+═══════════════════════════════════════════════════════════════════════════════
+LEGAL REQUIREMENTS (MUST DO!)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. OPT-IN CONSENT
+   ───────────────
+   Before sending ANY message:
+   - User must explicitly agree
+   - Checkbox on website: "Yes, send me WhatsApp updates"
+   - Save timestamp + proof of consent
+   - Never buy phone lists or scrape numbers
+   
+   Example opt-in:
+   ☐ I agree to receive WhatsApp messages from [Business Name]
+
+2. OPT-OUT MECHANISM
+   ───────────────────
+   Every message MUST include:
+   "Reply STOP to unsubscribe"
+   
+   When user replies STOP:
+   - Remove from list IMMEDIATELY
+   - Never message again
+   - Honor within 24 hours
+
+3. PRIVACY POLICY
+   ────────────────
+   Update your privacy policy to include:
+   - WhatsApp messaging
+   - How you use phone numbers
+   - How to opt-out
+   - Data retention period
+
+4. MESSAGE FREQUENCY
+   ───────────────────
+   Best practices:
+   - Max 1 message per day per user
+   - Respect quiet hours (9 AM - 9 PM)
+   - Don't spam
+   - Provide value in every message
+
+═══════════════════════════════════════════════════════════════════════════════
+PRICING (AS OF 2024)
+═══════════════════════════════════════════════════════════════════════════════
+
+FREE TIER:
+- First 1,000 conversations per month: FREE
+- Conversation = 24-hour messaging window
+
+AFTER FREE TIER:
+- Marketing: $0.03 - $0.10 per conversation (varies by country)
+- Utility: $0.01 - $0.05 per conversation
+- Authentication: $0.005 - $0.02 per conversation
+
+Check current pricing:
+https://developers.facebook.com/docs/whatsapp/pricing
+
+═══════════════════════════════════════════════════════════════════════════════
+HELPFUL LINKS
+═══════════════════════════════════════════════════════════════════════════════
+
+Meta Developer Console:
+https://developers.facebook.com/
+
+WhatsApp Business Platform Docs:
+https://developers.facebook.com/docs/whatsapp/
+
+Cloud API Getting Started:
+https://developers.facebook.com/docs/whatsapp/cloud-api/get-started
+
+Message Templates Guide:
+https://developers.facebook.com/docs/whatsapp/message-templates
+
+Business Verification:
+https://www.facebook.com/business/help/159334372093366
+
+WhatsApp Business Policy:
+https://www.whatsapp.com/legal/business-policy
+
+Pricing Calculator:
+https://developers.facebook.com/docs/whatsapp/pricing
+
+Support:
+https://business.facebook.com/help
+
+═══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+Error: "Invalid phone number"
+→ Ensure number includes country code: +919876543210
+
+Error: "Access token expired"
+→ Generate new token or use permanent token
+
+Error: "Phone number not registered"
+→ Recipient must have WhatsApp installed
+
+Error: "Template not found"
+→ Template must be approved first in Meta dashboard
+
+Error: "Message failed to send"
+→ Check if number is in test recipient list (for test numbers)
+
+Error: "Rate limit exceeded"
+→ Reduce RATE_LIMIT_CONCURRENCY in .env
+
+═══════════════════════════════════════════════════════════════════════════════
+QUICK CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+BEFORE GOING LIVE:
+☐ Meta developer account created
+☐ WhatsApp app created
+☐ Phone Number ID obtained
+☐ Access Token obtained (permanent for production)
+☐ .env file configured
+☐ Tested with your own number
+☐ Message templates created and approved
+☐ Business verified (for production)
+☐ Own phone number added (not test number)
+☐ Opt-in mechanism implemented
+☐ Privacy policy updated
+☐ Opt-out process ready
+☐ Customer consent collected
+☐ 250 recipient limit understood
+☐ Pricing reviewed
+
+READY TO LAUNCH:
+☐ Start with 10-50 users
+☐ Monitor delivery rates
+☐ Check for user complaints
+☐ Honor opt-outs immediately
+☐ Gradually scale up
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Need help? Check the documentation links above or contact Meta Business Support.
+
+Good luck with your WhatsApp broadcast campaigns! 🚀
