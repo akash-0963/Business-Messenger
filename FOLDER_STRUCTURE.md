@@ -1,6 +1,6 @@
 # Project Folder Structure Analysis
 
-Your WhatsApp Marketing Broadcast project has **3 main folders**. Here's what each does and why they exist:
+Your WhatsApp Marketing Broadcast project has **2 main folders**. Here's what each does and why they exist:
 
 ---
 
@@ -122,65 +122,23 @@ CampaignRecipient
 
 ---
 
-## 3. ⚡ **NO-DB-BACKEND** - Express.js API without Database
-
-### Purpose
-Lightweight alternative backend for **testing** or **simple use cases** without data persistence.
-
-### Structure
-```
-no-db-backend/
-├── server.js                      # Express server (NO database)
-├── package.json                   # Dependencies: Express only (no Prisma/MongoDB)
-├── .env.example                   # Environment variables
-├── routes/
-│   ├── send.js                    # POST /api/send - Send broadcasts
-│   └── validate.js                # POST /api/validate - Validate phones
-├── services/
-│   └── whatsappService.js         # WhatsApp API integration
-└── utils/
-    ├── helpers.js                 # Utility functions
-    └── normalizer.js              # Phone normalization
-```
-
-### Technologies
-- **Express.js** - Web server
-- **Axios** - WhatsApp API calls
-- **p-queue** - Rate limiting
-- **NO database** - All data ephemeral (in-memory only)
-
-### What it does
-✅ Same as backend BUT:
-❌ No data persistence
-❌ No contact history
-❌ No campaign tracking
-❌ Data lost on server restart
-✅ Great for testing WhatsApp API
-✅ Lower memory footprint
-✅ Fastest to deploy
-
-### When to use it
-- **Testing**: Quickly test WhatsApp API without database setup
-- **Development**: Rapid prototyping without DB overhead
-- **Demos**: Show functionality without infrastructure
-- **Cost**: $0/month (no database cost, minimal resources)
 
 ---
 
 ## 📊 Quick Comparison
 
-| Feature | Frontend | Backend (DB) | No-DB-Backend |
-|---------|----------|--------------|---------------|
-| **Purpose** | UI/UX | Production API | Testing/Demo |
-| **Database** | N/A | ✅ MongoDB | ❌ None |
-| **Data Persistence** | N/A | ✅ Permanent | ❌ Ephemeral |
-| **Contact History** | Shows cached | ✅ Full history | ❌ No history |
-| **Campaign Tracking** | Shows results | ✅ Full tracking | ❌ No tracking |
-| **WhatsApp Integration** | Calls API | ✅ Yes | ✅ Yes |
-| **Rate Limiting** | N/A | ✅ Yes | ✅ Yes |
-| **Production Ready** | ✅ Yes | ✅ Yes | ❌ No |
-| **Cost** | $0-5/mo | $0/mo (free tier) | $0/mo |
-| **Deployment** | Vercel/Netlify | Railway/Render | Railway/Render |
+| Feature | Frontend | Backend (DB) |
+|---------|----------|--------------|
+| **Purpose** | UI/UX | Production API |
+| **Database** | N/A | ✅ MongoDB |
+| **Data Persistence** | N/A | ✅ Permanent |
+| **Contact History** | Shows cached | ✅ Full history |
+| **Campaign Tracking** | Shows results | ✅ Full tracking |
+| **WhatsApp Integration** | Calls API | ✅ Yes |
+| **Rate Limiting** | N/A | ✅ Yes |
+| **Production Ready** | ✅ Yes | ✅ Yes |
+| **Cost** | $0-5/mo | $0/mo (free tier) |
+| **Deployment** | Vercel/Netlify | Railway/Render |
 
 ---
 
@@ -195,33 +153,11 @@ Why:  Full features, data persistence, professional tracking
 ### For Development
 ```
 Use:  Frontend + Backend (with MongoDB)
-Why:  Same as production, easier to test real scenarios
-```
-
-### For Quick Testing/Prototyping
-```
-Use:  Frontend + No-DB-Backend
-Why:  Faster setup, no database overhead, test WhatsApp API quickly
-```
-
-### For Learning
-```
-Use:  No-DB-Backend only (curl/Postman)
-Why:  Understand API without DB complexity
+Why:  Same as production, test real scenarios
 ```
 
 ---
 
-## 🗑️ Cleanup Recommendation
-
-**The `no-db-backend/` folder is optional:**
-
-- ✅ Keep it if: You plan to do quick API testing or demos
-- ❌ Delete it if: You're only running production (saves space, reduces confusion)
-
-**Decision:** Do you need the no-db-backend for testing, or can we remove it?
-
----
 
 ## 🚀 Next Steps
 
@@ -246,9 +182,25 @@ Why:  Understand API without DB complexity
 
 ---
 
-## 📝 Notes
+## 📝 Architecture
 
-- All folders are **independent** - you can update one without affecting others
-- Frontend talks to Backend via HTTP (API calls with Axios)
-- Backend talks to WhatsApp Cloud API via HTTPS
-- Database (MongoDB) is optional - frontend/backend work without it for testing
+```
+┌─────────────────┐
+│     FRONTEND    │
+│  (React + UI)   │
+└────────┬────────┘
+         │ HTTP (Axios)
+         ↓
+┌─────────────────┐
+│     BACKEND     │
+│  (Express API)  │
+└────────┬────────┘
+         │ Prisma ORM
+         ↓
+  ┌─────────────────┐
+  │ MongoDB Atlas   │
+  │  (Database)     │
+  └─────────────────┘
+         
+Backend also connects to:
+  └─→ WhatsApp Cloud API (HTTPS)
