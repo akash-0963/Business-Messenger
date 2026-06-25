@@ -4,6 +4,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+package-lock.json
+yarn.lock
 
 # Environment Variables
 .env
@@ -30,7 +32,6 @@ Thumbs.db
 
 # Prisma
 prisma/migrations/
-.env
 
 # Testing
 coverage/
@@ -44,5 +45,15 @@ coverage/
 *.sqlite
 *.sqlite3
 
+# Runtime/Development
+.next/
+.nuxt/
+out/
+
+# Vite
+.vite/
+frontend/node_modules/.vite/
+
 # Misc
 .cache/
+.turbo/
