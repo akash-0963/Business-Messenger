@@ -156,7 +156,6 @@ const CampaignPage = () => {
         <div className="flex justify-between items-start mb-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Campaigns</h1>
-            <p className="text-gray-600 mt-1">Create, manage, and track your WhatsApp campaigns</p>
           </div>
           <button
             onClick={handleCreateCampaign}
