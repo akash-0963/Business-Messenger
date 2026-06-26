@@ -10,7 +10,6 @@ export default function Sidebar() {
   const navItems = [
     { path: '/', label: 'Dashboard', icon: '📊' },
     { path: '/campaigns', label: 'Campaigns', icon: '📋' },
-    { path: '/broadcast', label: 'Send Campaign', icon: '📤' },
     { path: '/contacts', label: 'Manage Contacts', icon: '👥' },
   ];
 

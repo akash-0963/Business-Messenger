@@ -178,12 +178,6 @@ const DashboardPage = () => {
                 >
                   👥 Manage Contacts
                 </Link>
-                <Link
-                  to="/broadcast"
-                  className="block w-full px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-center font-medium transition-colors"
-                >
-                  📤 Send Campaign
-                </Link>
               </div>
 
               <div className="mt-6 pt-6 border-t">
