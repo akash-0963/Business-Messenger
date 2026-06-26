@@ -83,3 +83,33 @@ model CampaignRecipient {
 
   @@index([campaignId])
 }
+
+model Template {
+  id                 String              @id @default(auto()) @map("_id") @db.ObjectId
+  name               String              @unique
+  category           String              // 'marketing', 'utility', 'authentication'
+  content            String              // Main message content
+  header             String?             // Optional header
+  footer             String?             // Optional footer
+  buttons            TemplateButton[]
+  status             String              @default("draft") // 'draft', 'pending', 'approved', 'rejected'
+  metaTemplateId     String?             // ID from Meta after approval
+  rejectionReason    String?             // Reason if rejected by Meta
+  submittedAt        DateTime?           // When submitted to Meta
+  approvedAt         DateTime?           // When approved by Meta
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+}
+
+model TemplateButton {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  templateId String   @db.ObjectId
+  buttonType String   // 'URL', 'PHONE', 'QUICK_REPLY'
+  title      String
+  url        String?  // For URL button
+  phone      String?  // For PHONE button
+  text       String?  // For QUICK_REPLY button
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([templateId])
+}

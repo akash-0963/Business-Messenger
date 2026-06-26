@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/DashboardPage';
 import CampaignPage from './pages/CampaignPage';
+import TemplatePage from './pages/TemplatePage';
 import ManageContactsPage from './pages/ManageContactsPage';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Routes>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/campaigns" element={<CampaignPage />} />
+              <Route path="/templates" element={<TemplatePage />} />
               <Route path="/contacts" element={<ManageContactsPage />} />
             </Routes>
           </main>

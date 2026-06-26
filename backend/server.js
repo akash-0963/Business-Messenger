@@ -12,6 +12,7 @@ import webhookRoutes from './routes/webhook.js';
 import contactRoutes from './routes/contacts.js';
 import tagRoutes from './routes/tags.js';
 import campaignRoutes from './routes/campaigns.js';
+import templateRoutes from './routes/templates.js';
 
 // Load environment variables
 dotenv.config();
@@ -68,6 +69,7 @@ app.get('/', (req, res) => {
 app.use('/api/contacts', contactRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api/campaigns', campaignRoutes);
+app.use('/api/templates', templateRoutes);
 app.use('/api', validateRoutes);
 app.use('/api', sendRoutes);
 app.use('/api', dataRoutes);
