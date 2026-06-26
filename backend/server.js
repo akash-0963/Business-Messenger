@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 // Health check
 app.get('/', (req, res) => {
   res.json({
-    message: 'WhatsApp Broadcast Portal API',
+    message: 'WA Messenger API',
     version: '1.0.0',
     status: 'running',
     endpoints: {
@@ -118,7 +118,7 @@ process.on('SIGINT', gracefulShutdown);
 // Start server
 app.listen(PORT, () => {
   console.log('═══════════════════════════════════════════════════');
-  console.log('🚀 WhatsApp Broadcast Portal - Backend Server');
+  console.log('🚀 WA Messenger - Backend Server');
   console.log('═══════════════════════════════════════════════════');
   console.log(`📡 Server running on port ${PORT}`);
   console.log(`🌍 Environment: ${NODE_ENV}`);

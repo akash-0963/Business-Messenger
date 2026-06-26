@@ -1,5 +1,5 @@
 /**
- * Utility Functions for WhatsApp Broadcast Portal
+ * Utility Functions for WA Messenger
  */
 
 /**

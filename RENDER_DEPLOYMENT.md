@@ -1,6 +1,6 @@
 # Render Deployment Guide
 
-This guide explains how to deploy the WhatsApp Marketing Broadcast platform on Render (both frontend and backend).
+This guide explains how to deploy the WA Messenger platform on Render (both frontend and backend).
 
 ---
 

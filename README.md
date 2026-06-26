@@ -1,6 +1,6 @@
-# 📱 WhatsApp Broadcast Portal
+# 📱 WA Messenger
 
-A production-ready full-stack application for sending bulk WhatsApp messages using the Meta WhatsApp Cloud API. Built with React, Node.js, Express, PostgreSQL, and Prisma ORM.
+A production-ready full-stack application for sending bulk WhatsApp messages using the Meta WhatsApp Cloud API. Built with React, Node.js, Express, MongoDB, and Prisma ORM.
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
@@ -31,7 +31,7 @@ A production-ready full-stack application for sending bulk WhatsApp messages usi
 
 ## 🎯 Overview
 
-WhatsApp Broadcast Portal is a comprehensive solution for businesses and organizations to send bulk WhatsApp messages efficiently. It provides a user-friendly web interface for managing contacts, validating WhatsApp numbers, composing messages with personalization, and tracking campaign results.
+WA Messenger is a comprehensive solution for businesses and organizations to send bulk WhatsApp messages efficiently. It provides a user-friendly web interface for managing contacts, validating WhatsApp numbers, composing messages with personalization, and tracking campaign results.
 
 ### Key Capabilities
 

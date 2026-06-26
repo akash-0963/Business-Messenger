@@ -3,7 +3,7 @@ REM Start both frontend and backend in development mode
 REM Windows batch script
 
 echo.
-echo 🚀 WhatsApp Marketing Broadcast - Development Mode
+echo 🚀 WA Messenger - Development Mode
 echo ==================================================
 echo.
 

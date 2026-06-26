@@ -1,6 +1,6 @@
 # Project Folder Structure Analysis
 
-Your WhatsApp Marketing Broadcast project has **2 main folders**. Here's what each does and why they exist:
+Your WA Messenger project has **2 main folders**. Here's what each does and why they exist:
 
 ---
 

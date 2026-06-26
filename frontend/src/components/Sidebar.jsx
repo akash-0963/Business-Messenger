@@ -60,7 +60,7 @@ export default function Sidebar() {
             <p className="text-green-400 font-semibold mt-1">🟢 Connected</p>
           </div>
           <div className="text-xs text-gray-500 text-center">
-            <p>WhatsApp Broadcast v1.0</p>
+            <p>WA Messenger v1.0</p>
           </div>
         </div>
       </div>

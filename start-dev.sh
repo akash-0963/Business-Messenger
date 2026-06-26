@@ -3,7 +3,7 @@
 # Start both frontend and backend in development mode
 # Requires: Node.js, npm, MongoDB running locally (or MongoDB Atlas connection in .env)
 
-echo "🚀 WhatsApp Marketing Broadcast - Development Mode"
+echo "🚀 WA Messenger - Development Mode"
 echo "=================================================="
 
 # Check if backend .env exists

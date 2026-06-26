@@ -16,7 +16,7 @@ function App() {
           {/* Top Header */}
           <header className="bg-white shadow">
             <div className="px-6 py-4">
-              <h2 className="text-2xl font-bold text-gray-900">WhatsApp Marketing Broadcast</h2>
+              <h2 className="text-2xl font-bold text-gray-900">WA Messenger</h2>
               <p className="text-sm text-gray-600 mt-1">Manage your campaigns and contacts efficiently</p>
             </div>
           </header>
