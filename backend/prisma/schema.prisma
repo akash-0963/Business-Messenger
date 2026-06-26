@@ -15,6 +15,7 @@ model Tag {
   name      String           @unique
   createdAt DateTime         @default(now())
   contacts  ContactTag[]
+  campaigns CampaignTag[]
 }
 
 model Contact {
@@ -40,12 +41,35 @@ model ContactTag {
 
 model Campaign {
   id                 String               @id @default(auto()) @map("_id") @db.ObjectId
-  message            String
+  name               String?
+  description        String?
+  message            String?
+  status             String               @default("draft") // 'draft', 'scheduled', 'active', 'sent', 'failed'
+  tags               CampaignTag[]
+  dateFrom           DateTime?            // For filtering contacts by creation date
+  dateTo             DateTime?            // For filtering contacts by creation date
   totalRecipients    Int                  @default(0)
   successCount       Int                  @default(0)
   failureCount       Int                  @default(0)
+  pendingCount       Int                  @default(0)
+  sendImmediate      Boolean              @default(true)
+  scheduledDate      DateTime?
+  sentAt             DateTime?
   createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
   CampaignRecipient  CampaignRecipient[]
+}
+
+model CampaignTag {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  campaignId String   @db.ObjectId
+  tagId      String   @db.ObjectId
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, tagId])
+  @@index([campaignId])
+  @@index([tagId])
 }
 
 model CampaignRecipient {
