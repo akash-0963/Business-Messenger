@@ -114,7 +114,7 @@ Should return: `{"success":true,"status":"healthy"}`
 ### Test Frontend:
 Open: `https://whatsapp-ui.onrender.com`
 
-You should see the WhatsApp broadcast UI!
+You should see the WA Messenger UI!
 
 ---
 

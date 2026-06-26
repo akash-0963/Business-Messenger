@@ -1,6 +1,6 @@
 /**
  * Comprehensive list of country calling codes
- * Supports 200+ countries for global WhatsApp broadcast
+ * Supports 200+ countries for global WA Messenger
  */
 
 export const countryCodes = [

@@ -935,4 +935,4 @@ Future enhancements:
 
 ---
 
-**Built with ❤️ for efficient WhatsApp broadcasting**
+**Built with ❤️ for efficient WhatsApp Business Messaging**

@@ -7,7 +7,7 @@ Your WA Messenger project has **2 main folders**. Here's what each does and why 
 ## 1. 📱 **FRONTEND** - React UI Application
 
 ### Purpose
-User-facing web interface for the WhatsApp broadcast platform.
+User-facing web interface for the WA Messenger.
 
 ### Structure
 ```
