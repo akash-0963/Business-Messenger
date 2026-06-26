@@ -1,0 +1,44 @@
+services:
+  # Backend API Service
+  - type: web
+    name: whatsapp-api
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install && npx prisma generate
+    startCommand: cd backend && npm run dev
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        scope: runtime_only
+        sync: false
+      - key: WHATSAPP_TOKEN
+        scope: runtime_only
+        sync: false
+      - key: DATABASE_URL
+        scope: runtime_only
+        sync: false
+      - key: WEBHOOK_VERIFY_TOKEN
+        scope: runtime_only
+        sync: false
+      - key: RATE_LIMIT_CONCURRENCY
+        value: 5
+      - key: RATE_LIMIT_INTERVAL
+        value: 1000
+      - key: FRONTEND_URL
+        value: https://whatsapp-marketing-broadcast.onrender.com
+
+  # Frontend Service
+  - type: web
+    name: whatsapp-ui
+    runtime: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm run preview
+    envVars:
+      - key: VITE_API_URL
+        value: https://whatsapp-api.onrender.com
+      - key: VITE_DEBUG_MODE
+        value: false
