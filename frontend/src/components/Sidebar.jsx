@@ -32,8 +32,7 @@ export default function Sidebar() {
       >
         {/* Logo Section */}
         <div className="p-6 border-b border-gray-700">
-          <h1 className="text-2xl font-bold text-blue-400">📱 WhatsApp</h1>
-          <p className="text-sm text-gray-400 mt-1">Broadcast Portal</p>
+          <h1 className="text-2xl font-bold text-blue-400">WA Messenger</h1>
         </div>
 
         {/* Navigation */}
