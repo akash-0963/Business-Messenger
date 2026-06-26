@@ -198,8 +198,11 @@ const BroadcastPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Header />
+    <div className="p-6">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">Send Campaign</h1>
+        <p className="text-gray-600 mt-1">Create and send bulk WhatsApp messages to your contacts</p>
+      </div>
       
       {/* 250 Recipient Limit Warning */}
       {contacts.length > MAX_RECIPIENTS && (
