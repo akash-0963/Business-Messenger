@@ -9,6 +9,8 @@ import validateRoutes from './routes/validate.js';
 import sendRoutes from './routes/send.js';
 import dataRoutes from './routes/data.js';
 import webhookRoutes from './routes/webhook.js';
+import contactRoutes from './routes/contacts.js';
+import tagRoutes from './routes/tags.js';
 
 // Load environment variables
 dotenv.config();
@@ -62,6 +64,8 @@ app.get('/', (req, res) => {
 });
 
 // API Routes
+app.use('/api/contacts', contactRoutes);
+app.use('/api/tags', tagRoutes);
 app.use('/api', validateRoutes);
 app.use('/api', sendRoutes);
 app.use('/api', dataRoutes);
